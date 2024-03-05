@@ -140,7 +140,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Icon_BatteryFull_0: -7848180997590989442
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

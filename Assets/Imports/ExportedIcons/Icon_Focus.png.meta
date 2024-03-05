@@ -236,7 +236,12 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Icon_Focus_0: 2023298230162494188
+      Icon_Focus_1: -6119492905267915873
+      Icon_Focus_2: -4297488594666787438
+      Icon_Focus_3: -6555773262233579133
+      Icon_Focus_4: 7450299068649527672
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

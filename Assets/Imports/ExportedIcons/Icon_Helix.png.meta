@@ -140,7 +140,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Icon_Helix_0: -7988130968896530628
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

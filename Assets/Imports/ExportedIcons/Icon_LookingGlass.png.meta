@@ -140,7 +140,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Icon_LookingGlass_0: -2666265071808360709
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

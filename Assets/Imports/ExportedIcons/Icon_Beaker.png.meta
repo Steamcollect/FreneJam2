@@ -140,7 +140,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Icon_Beaker_0: 3334564692304086633
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

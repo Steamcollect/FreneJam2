@@ -6,6 +6,7 @@ public class CharacterController : MonoBehaviour
 {
     public float damage;
     public float attackPointBonnus, defensesPointBonnus;
+    public int attackPointGiven, defensePointGiven;
 
     public ParticleSystem healthParticle, attackParticle, defenseParticle, hitParticle;
 

@@ -14609,9 +14609,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34cae1fed6dbafa4986079a1ffaa1482, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
+  damage: 2
   attackPointBonnus: 0
   defensesPointBonnus: 0
+  attackPointGiven: 1
+  defensePointGiven: 10
   healthParticle: {fileID: 4279151024808083068}
   attackParticle: {fileID: 5765531578915821515}
   defenseParticle: {fileID: 1379413567746842731}
@@ -14629,7 +14631,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97819067a22bd6146bcce511cfb3ccdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 50
+  maxHealth: 8
   currentHealth: 0
   isDead: 0
 --- !u!1 &8617294984999449687

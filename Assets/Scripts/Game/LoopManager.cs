@@ -13,6 +13,7 @@ public class LoopManager : MonoBehaviour
 
     bool isPlayerTurn = false;
     CharacterController player, enemy;
+    public HealthBar playerHealthBar, enemyHealthBar;
 
     ScoreManager scoreManager;
 
@@ -26,7 +27,10 @@ public class LoopManager : MonoBehaviour
         ai = new EnemyAI();
 
         player = Instantiate(playerPrefabs, playerPos, Quaternion.identity).GetComponent<CharacterController>();
+        playerHealthBar.SetMaxHealth(player.health.maxHealth);
+
         enemy = Instantiate(enemysPrefabs[Random.Range(0, enemysPrefabs.Length)], enemyPos, Quaternion.identity).GetComponent<CharacterController>();
+        enemyHealthBar.SetMaxHealth(enemy.health.maxHealth);
 
         StartCoroutine(NextTurn());
     }
@@ -62,6 +66,7 @@ public class LoopManager : MonoBehaviour
         if (isPlayerTurn)
         {
             enemy.health.takeDamage((int)player.CalculateAttackDamage());
+            enemyHealthBar.SetHealthBarVisual(enemy.health.currentHealth);
             enemy.hitParticle.Play();
             if (enemy.health.isDead)
             {
@@ -74,6 +79,7 @@ public class LoopManager : MonoBehaviour
         else
         {
             player.health.takeDamage((int)enemy.CalculateAttackDamage());
+            playerHealthBar.SetHealthBarVisual(player.health.currentHealth);
             player.hitParticle.Play();
             if (player.health.isDead)
             {
@@ -89,12 +95,12 @@ public class LoopManager : MonoBehaviour
     {
         if (isPlayerTurn)
         {
-            player.AddDefensePoint(30);
+            player.AddDefensePoint(player.defensePointGiven);
             player.defenseParticle.Play();
         }
         else
         {
-            enemy.AddDefensePoint(30);
+            enemy.AddDefensePoint(enemy.defensePointGiven);
             enemy.defenseParticle.Play();
         }
 
@@ -104,12 +110,12 @@ public class LoopManager : MonoBehaviour
     {
         if (isPlayerTurn)
         {
-            player.AddAttackPoint(20);
+            player.AddAttackPoint(player.attackPointGiven);
             player.attackParticle.Play();
         }
         else
         {
-            enemy.AddAttackPoint(20);
+            enemy.AddAttackPoint(enemy.attackPointGiven);
             enemy.attackParticle.Play();
         }
 
@@ -120,11 +126,13 @@ public class LoopManager : MonoBehaviour
         if (isPlayerTurn)
         {
             player.health.TakeHealth(10);
+            playerHealthBar.SetHealthBarVisual(player.health.currentHealth);
             player.healthParticle.Play();
         }
         else
         {
             enemy.health.TakeHealth(10);
+            enemyHealthBar.SetHealthBarVisual(enemy.health.currentHealth);
             enemy.healthParticle.Play();
         }
 
