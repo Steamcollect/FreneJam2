@@ -5,7 +5,7 @@ using UnityEngine;
 public class CharacterController : MonoBehaviour
 {
     public int damage;
-    public int attackPointBonnus, defensesPointBonnus;
+    public int attackPointBonnus, defensesPointBonnus, equipmentAttackPoint, equipmentDefensePoint;
     public int attackPointGiven, defensePointGiven;
 
     public bool canDoAction;
@@ -29,11 +29,11 @@ public class CharacterController : MonoBehaviour
         int tmp = attackPointBonnus;
         attackPointBonnus = 0;
 
-        return damage + tmp;
+        return damage + tmp + equipmentAttackPoint;
     }
     int CalculateDamageTaken(int totalDamage)
     {
-        int damage = totalDamage - defensesPointBonnus;
+        int damage = totalDamage - defensesPointBonnus - equipmentDefensePoint;
 
         if(damage <= 0)
         {
@@ -55,7 +55,7 @@ public class CharacterController : MonoBehaviour
 
             enemy.TakeDamage(CalculateAttackDamage());
             attackPointBonnus = 0;
-            statBar.SetAttackVisual(attackPointBonnus);
+            statBar.SetAttackVisual(attackPointBonnus, equipmentAttackPoint);
 
             StartCoroutine(loopManager.NextTurn());
         }
@@ -69,7 +69,7 @@ public class CharacterController : MonoBehaviour
             attackParticle.Play();
 
             attackPointBonnus += attackPointGiven;
-            statBar.SetAttackVisual(attackPointBonnus);
+            statBar.SetAttackVisual(attackPointBonnus, equipmentAttackPoint);
 
             StartCoroutine(loopManager.NextTurn());
         }        
@@ -83,7 +83,7 @@ public class CharacterController : MonoBehaviour
             defenseParticle.Play();
 
             defensesPointBonnus += defensePointGiven;
-            statBar.SetShieldVisual(defensesPointBonnus);
+            statBar.SetShieldVisual(defensesPointBonnus, equipmentDefensePoint);
 
             StartCoroutine(loopManager.NextTurn());
         }        
@@ -103,6 +103,6 @@ public class CharacterController : MonoBehaviour
     public void TakeDamage(int damage)
     {
         health.TakeDamage(CalculateDamageTaken(damage));
-        statBar.SetShieldVisual(defensesPointBonnus);
+        statBar.SetShieldVisual(defensesPointBonnus, equipmentDefensePoint);
     }
 }

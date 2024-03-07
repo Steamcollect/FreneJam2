@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class EntityHealth : MonoBehaviour
 {
-    public int maxHealth, currentHealth;
+    public int maxHealth, currentHealth, maxEquipmentHealth;
+    int EquipmentHealth;
 
     public StatsBar statBar;
     public ParticleSystem hitParticle;
@@ -19,14 +21,21 @@ public class EntityHealth : MonoBehaviour
 
     private void Start()
     {
-        currentHealth = maxHealth;
+        currentHealth = maxHealth + EquipmentHealth;
     }
 
     public void TakeHealth(int health)
     {
         currentHealth += health;
-        if (currentHealth > maxHealth) currentHealth = maxHealth;
-        statBar.SetHealthVisual(currentHealth, maxHealth);
+        if (currentHealth > maxHealth + EquipmentHealth) currentHealth = maxHealth + EquipmentHealth;
+        if(currentHealth > maxHealth)
+        {
+            int tmp = currentHealth - maxHealth;
+            if (tmp > 0) EquipmentHealth = tmp;
+            else EquipmentHealth = 0;
+
+        }
+        statBar.SetHealthVisual(currentHealth, maxHealth, EquipmentHealth);
     }
 
     public void TakeDamage(int damage)
@@ -36,7 +45,7 @@ public class EntityHealth : MonoBehaviour
         hitParticle.Play();
         currentHealth -= damage;
         if (currentHealth < 0) currentHealth = 0;
-        statBar.SetHealthVisual(currentHealth, maxHealth);
+        statBar.SetHealthVisual(currentHealth, maxHealth, EquipmentHealth);
 
         if (currentHealth <= 0)
         {
@@ -46,7 +55,7 @@ public class EntityHealth : MonoBehaviour
 
     void Die()
     {
-        GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0);
+        transform.DesactiveInBump();
         isDead = true;
     }
 }

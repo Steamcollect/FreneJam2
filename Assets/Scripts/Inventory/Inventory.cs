@@ -61,6 +61,7 @@ public class Inventory : MonoBehaviour
                 {
                     playerController.attackPointBonnus -= helmetData.damageGiven;
                     playerController.defensePointGiven -= helmetData.defenseGiven;
+                    playerController.health.maxEquipmentHealth -= helmetData.healthGiven;
                 }
                 helmetImage.sprite = item.visual;
                 helmetImage.transform.Bump(1.2f);
@@ -72,6 +73,7 @@ public class Inventory : MonoBehaviour
                 {
                     playerController.attackPointBonnus -= plateData.damageGiven;
                     playerController.defensePointGiven -= plateData.defenseGiven;
+                    playerController.health.maxEquipmentHealth -= plateData.healthGiven;
                 }
                 plateImage.sprite = item.visual;
                 plateImage.transform.Bump(1.2f);
@@ -83,6 +85,7 @@ public class Inventory : MonoBehaviour
                 {
                     playerController.attackPointBonnus -= feetData.damageGiven;
                     playerController.defensePointGiven -= feetData.defenseGiven;
+                    playerController.health.maxEquipmentHealth -= feetData.healthGiven;
                 }
                 feetImage.sprite = item.visual;
                 feetImage.transform.Bump(1.2f);
@@ -94,6 +97,7 @@ public class Inventory : MonoBehaviour
                 {
                     playerController.attackPointBonnus -= weaponData.damageGiven;
                     playerController.defensePointGiven -= weaponData.defenseGiven;
+                    playerController.health.maxEquipmentHealth -= weaponData.healthGiven;
                 }
                 weaponImage.sprite = item.visual;
                 weaponImage.transform.Bump(1.2f);
@@ -101,8 +105,9 @@ public class Inventory : MonoBehaviour
                 break;
         }
 
-        playerController.attackPointBonnus += item.damageGiven;
-        playerController.defensesPointBonnus += item.defenseGiven;
+        playerController.equipmentAttackPoint += item.damageGiven;
+        playerController.equipmentDefensePoint += item.defenseGiven;
+        playerController.health.maxEquipmentHealth += item.healthGiven;
 
         addItemPanelGO.SetActive(false);
     }

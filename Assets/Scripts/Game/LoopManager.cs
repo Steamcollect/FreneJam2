@@ -44,9 +44,9 @@ public class LoopManager : MonoBehaviour
         player.loopManager = this;
         player.statBar = playerStatBar;
         player.health.statBar = playerStatBar;
-        playerStatBar.SetHealthVisual(player.health.maxHealth, player.health.maxHealth);
-        playerStatBar.SetShieldVisual(player.defensesPointBonnus);
-        playerStatBar.SetAttackVisual(player.attackPointBonnus);
+        playerStatBar.SetHealthVisual(player.health.maxHealth, player.health.maxHealth, player.health.maxEquipmentHealth);
+        playerStatBar.SetShieldVisual(player.defensesPointBonnus,player.equipmentDefensePoint);
+        playerStatBar.SetAttackVisual(player.attackPointBonnus, player.equipmentAttackPoint);
 
         enemyAI = new EnemyAI();
 
@@ -65,6 +65,8 @@ public class LoopManager : MonoBehaviour
             scoreManager.AddScore(5);
             if(Random.Range(0,100) <= itemDropPercentage)
             {
+                yield return new WaitForSeconds(1f);
+
                 int tmp = Random.Range(0, items.Count);
                 inventory.SetAddItemPanel(items[tmp]);
                 items.RemoveAt(tmp);
@@ -90,7 +92,7 @@ public class LoopManager : MonoBehaviour
                 }
             }
 
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(1.2f);
 
             if (isPlayerTurn)
             {
@@ -136,9 +138,9 @@ public class LoopManager : MonoBehaviour
         enemy.loopManager = this;
         enemy.statBar = enemyStatBar;
         enemy.health.statBar = enemyStatBar;
-        enemyStatBar.SetHealthVisual(enemy.health.maxHealth, enemy.health.maxHealth);
-        enemyStatBar.SetShieldVisual(enemy.defensesPointBonnus);
-        enemyStatBar.SetAttackVisual(enemy.attackPointBonnus);
+        enemyStatBar.SetHealthVisual(enemy.health.maxHealth, enemy.health.maxHealth, enemy.health.maxEquipmentHealth);
+        enemyStatBar.SetShieldVisual(enemy.defensesPointBonnus, enemy.equipmentDefensePoint);
+        enemyStatBar.SetAttackVisual(enemy.attackPointBonnus, enemy.equipmentAttackPoint);
 
         // Set enemy AI
         enemyAI.controller = enemy;

@@ -12,6 +12,7 @@ public class ItemData : ScriptableObject
 
     public int defenseGiven;
     public int damageGiven;
+    public int healthGiven;
 
     public EquipmentType equipmentType;
 }

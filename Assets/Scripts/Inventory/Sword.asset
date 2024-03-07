@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Sword
   m_EditorClassIdentifier: 
   itemName: Sword
-  itemDescription: blebldlv;mdkl,vzsnqxaqcs
+  itemDescription: "Un bonne grosse \"\xE9p\xE9e\""
   visual: {fileID: 712035800519618848, guid: ce9325652957c5d4dbec92971ec5ff6b, type: 3}
-  defenseGiven: 0
+  defenseGiven: 1
   damageGiven: 2
+  healthGiven: 3
   equipmentType: 3
