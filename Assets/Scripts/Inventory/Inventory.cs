@@ -38,6 +38,8 @@ public class Inventory : MonoBehaviour
     {
         this.item = item;
 
+        if (!isInventoryOpon) InventoryButton();
+
         addItemPanelGO.SetActive(true);
         addItemPanelGO.transform.Bump(1.2f);
 
@@ -61,6 +63,7 @@ public class Inventory : MonoBehaviour
                     playerController.defensePointGiven -= helmetData.defenseGiven;
                 }
                 helmetImage.sprite = item.visual;
+                helmetImage.transform.Bump(1.2f);
                 helmetData = item;
                 break;
 
@@ -71,6 +74,7 @@ public class Inventory : MonoBehaviour
                     playerController.defensePointGiven -= plateData.defenseGiven;
                 }
                 plateImage.sprite = item.visual;
+                plateImage.transform.Bump(1.2f);
                 plateData = item;
                 break;
 
@@ -81,6 +85,7 @@ public class Inventory : MonoBehaviour
                     playerController.defensePointGiven -= feetData.defenseGiven;
                 }
                 feetImage.sprite = item.visual;
+                feetImage.transform.Bump(1.2f);
                 feetData = item;
                 break;
 
@@ -91,6 +96,7 @@ public class Inventory : MonoBehaviour
                     playerController.defensePointGiven -= weaponData.defenseGiven;
                 }
                 weaponImage.sprite = item.visual;
+                weaponImage.transform.Bump(1.2f);
                 weaponData = item;
                 break;
         }
