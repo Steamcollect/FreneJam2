@@ -4,37 +4,105 @@ using UnityEngine;
 
 public class CharacterController : MonoBehaviour
 {
-    public float damage;
-    public float attackPointBonnus, defensesPointBonnus;
+    public int damage;
+    public int attackPointBonnus, defensesPointBonnus;
     public int attackPointGiven, defensePointGiven;
 
-    public ParticleSystem healthParticle, attackParticle, defenseParticle, hitParticle;
+    public bool canDoAction;
+
+    public ParticleSystem healthParticle, attackParticle, defenseParticle;
+    public AudioClip[] healSound, attackSound, focusSound, defenseSound;
 
     [HideInInspector]public EntityHealth health;
+    [HideInInspector]public StatsBar statBar;
+    [HideInInspector] public LoopManager loopManager;
+
+    [HideInInspector]public CharacterController enemy;
 
     private void Awake()
     {
         health = GetComponent<EntityHealth>();
     }
 
-    public float CalculateAttackDamage()
+    int CalculateAttackDamage()
     {
-        float tmp = attackPointBonnus;
+        int tmp = attackPointBonnus;
         attackPointBonnus = 0;
 
         return damage + tmp;
     }
-    public float calculateDamageTaken(float totalDamage)
+    int CalculateDamageTaken(int totalDamage)
     {
-        return totalDamage - (totalDamage * (float)(defensesPointBonnus / 100f));
+        int damage = totalDamage - defensesPointBonnus;
+
+        if(damage <= 0)
+        {
+            defensesPointBonnus = damage * -1;
+            return 0;
+        }
+        else
+        {
+            defensesPointBonnus = 0;
+            return damage;
+        }
     }
 
-    public void AddAttackPoint(int points)
+    public void Attack()
     {
-        attackPointBonnus += points;
+        if (canDoAction)
+        {
+            if (attackSound.Length > 0) AudioManager.instance.PlayClipAt(0, transform.position, attackSound[Random.Range(0, attackSound.Length)]);
+
+            enemy.TakeDamage(CalculateAttackDamage());
+            attackPointBonnus = 0;
+            statBar.SetAttackVisual(attackPointBonnus);
+
+            StartCoroutine(loopManager.NextTurn());
+        }
     }
-    public void AddDefensePoint(int points)
+    public void Focus()
     {
-        defensesPointBonnus += points;
+        if (canDoAction)
+        {
+            if (focusSound.Length > 0) AudioManager.instance.PlayClipAt(0, transform.position, focusSound[Random.Range(0, focusSound.Length)]);
+
+            attackParticle.Play();
+
+            attackPointBonnus += attackPointGiven;
+            statBar.SetAttackVisual(attackPointBonnus);
+
+            StartCoroutine(loopManager.NextTurn());
+        }        
+    }
+    public void Defend()
+    {
+        if (canDoAction)
+        {
+            if (defenseSound.Length > 0) AudioManager.instance.PlayClipAt(0, transform.position, defenseSound[Random.Range(0, defenseSound.Length)]);
+
+            defenseParticle.Play();
+
+            defensesPointBonnus += defensePointGiven;
+            statBar.SetShieldVisual(defensesPointBonnus);
+
+            StartCoroutine(loopManager.NextTurn());
+        }        
+    }
+    public void Heal()
+    {
+        if (canDoAction)
+        {
+            if (healSound.Length > 0) AudioManager.instance.PlayClipAt(0, transform.position, healSound[Random.Range(0, healSound.Length)]);
+
+            healthParticle.Play();
+            health.TakeHealth(2);
+            StartCoroutine(loopManager.NextTurn());
+        }
+    }
+
+    public void TakeDamage(int damage)
+    {
+        health.TakeDamage(CalculateDamageTaken(damage));
+        statBar.SetShieldVisual(defensesPointBonnus);
     }
 }

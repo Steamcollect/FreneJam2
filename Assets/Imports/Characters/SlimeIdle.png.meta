@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: a76351c147a24cf48bad0cf685630994
+guid: 2d49be45c1e153547be4576dc78bfa81
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4824328389704425691
-    second: Heart 1_0
+      213: 3032439450092817888
+    second: SlimeIdle_0
   externalObjects: {}
   serializedVersion: 12
   mipmaps:
@@ -98,13 +98,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Heart 1_0
+      name: SlimeIdle_0
       rect:
         serializedVersion: 2
-        x: 127
-        y: 150
-        width: 284
-        height: 215
+        x: 66
+        y: 192
+        width: 385
+        height: 231
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -112,8 +112,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: bd02a2c2c1573f240800000000000000
-      internalID: 4824328389704425691
+      spriteID: 0edc9a10d93651a20800000000000000
+      internalID: 3032439450092817888
       vertices: []
       indices: 
       edges: []
@@ -128,8 +128,7 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable:
-      Heart 1_0: 4824328389704425691
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,141 +1,149 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LoopManager : MonoBehaviour
 {
-    public GameObject playerPrefabs;
-    public GameObject[] enemysPrefabs;
+    public GameObject playerGO;
 
-    EnemyAI ai;
+    // Enemy stats
+    public List<GameObject> enemysPrefabs = new List<GameObject>();
+    EnemyAI enemyAI;
+    public Vector2 enemyPos;
 
-    public Vector2 playerPos, enemyPos;
-
-    bool isPlayerTurn = false;
     CharacterController player, enemy;
-    public HealthBar playerHealthBar, enemyHealthBar;
+    public StatsBar playerStatBar, enemyStatBar;
 
+    public Button[] playerButtons;
+    List<InteractiveButton> playerInteractiveButtons = new List<InteractiveButton>();
+
+    public bool isPlayerTurn = false;
+
+    public List<ItemData> items = new List<ItemData>();
+
+    public int itemDropPercentage;
     ScoreManager scoreManager;
+    Inventory inventory;
 
     private void Awake()
     {
         scoreManager = GetComponent<ScoreManager>();
+        inventory = GetComponent<Inventory>();
+
+        for (int i = 0; i < playerButtons.Length; i++)
+        {
+            playerInteractiveButtons.Add(playerButtons[i].GetComponent<InteractiveButton>());
+        }
     }
 
     private void Start()
     {
-        ai = new EnemyAI();
+        // Set player stats
+        player = playerGO.GetComponent<CharacterController>();
+        player.loopManager = this;
+        player.statBar = playerStatBar;
+        player.health.statBar = playerStatBar;
+        playerStatBar.SetHealthVisual(player.health.maxHealth, player.health.maxHealth);
+        playerStatBar.SetShieldVisual(player.defensesPointBonnus);
+        playerStatBar.SetAttackVisual(player.attackPointBonnus);
 
-        player = Instantiate(playerPrefabs, playerPos, Quaternion.identity).GetComponent<CharacterController>();
-        playerHealthBar.SetMaxHealth(player.health.maxHealth);
+        enemyAI = new EnemyAI();
 
-        enemy = Instantiate(enemysPrefabs[Random.Range(0, enemysPrefabs.Length)], enemyPos, Quaternion.identity).GetComponent<CharacterController>();
-        enemyHealthBar.SetMaxHealth(enemy.health.maxHealth);
+        CreateNewEnemy();
+
+        player.enemy = enemy;
+        inventory.playerController = player;
 
         StartCoroutine(NextTurn());
     }
 
-    IEnumerator NextTurn()
+    public IEnumerator NextTurn()
     {
-        isPlayerTurn = !isPlayerTurn;
-
-        if (!isPlayerTurn)
+        if (enemy.health.isDead)
         {
-            yield return new WaitForSeconds(.8f);
-
-            switch (ai.SelectAction())
+            scoreManager.AddScore(5);
+            if(Random.Range(0,100) <= itemDropPercentage)
             {
-                case 0:
-                    Attack();
-                    break;
-                case 1:
-                    Defend();
-                    break;
-                case 2:
-                    Focus();
-                    break;
-                case 3:
-                    Heal();
-                    break;
+                int tmp = Random.Range(0, items.Count);
+                inventory.SetAddItemPanel(items[tmp]);
+                items.RemoveAt(tmp);
+            }
+        }
+        else if (player.health.isDead)
+        {
+
+        }
+        else
+        {
+            isPlayerTurn = !isPlayerTurn;
+            player.canDoAction = isPlayerTurn;
+            enemy.canDoAction = !isPlayerTurn;
+
+            if (!isPlayerTurn)
+            {
+                for (int i = 0; i < playerButtons.Length; i++)
+                {
+                    playerButtons[i].interactable = false;
+                    playerButtons[i].transform.localScale = Vector3.one;
+                    playerInteractiveButtons[i].enabled = false;
+                }
+            }
+
+            yield return new WaitForSeconds(1.5f);
+
+            if (isPlayerTurn)
+            {
+                for (int i = 0; i < playerButtons.Length; i++)
+                {
+                    playerButtons[i].interactable = true;
+                    playerInteractiveButtons[i].enabled = true;
+                }
+            }
+
+            if (!isPlayerTurn)
+            {
+                switch (enemyAI.SelectAction())
+                {
+                    case 1:
+                        enemy.Attack();
+                        break;
+
+                    case 2:
+                        enemy.Defend();
+                        break;
+
+                    case 3:
+                        enemy.Focus();
+                        break;
+
+                    case 4:
+                        enemy.Heal();
+                        break;
+                }
+
             }
         }
     }
 
-    public void Attack()
+    void CreateNewEnemy()
     {
-        if (isPlayerTurn)
-        {
-            enemy.health.takeDamage((int)player.CalculateAttackDamage());
-            enemyHealthBar.SetHealthBarVisual(enemy.health.currentHealth);
-            enemy.hitParticle.Play();
-            if (enemy.health.isDead)
-            {
-                scoreManager.AddScore(5);
-                enemy.GetComponent<Animator>().SetTrigger("Die");
-                print("Enemy Dead");
-                return;
-            }
-        }
-        else
-        {
-            player.health.takeDamage((int)enemy.CalculateAttackDamage());
-            playerHealthBar.SetHealthBarVisual(player.health.currentHealth);
-            player.hitParticle.Play();
-            if (player.health.isDead)
-            {
-                player.GetComponent<Animator>().SetTrigger("Die");
-                print("Player Dead");
-                return;
-            }
-        }
+        // Get random enemy
+        int currentEnemyId = Random.Range(0, enemysPrefabs.Count);
+        enemy = Instantiate(enemysPrefabs[currentEnemyId], enemyPos, Quaternion.identity).GetComponent<CharacterController>();
+        enemysPrefabs.RemoveAt(currentEnemyId);
+        // Set enemy stats
+        enemy.loopManager = this;
+        enemy.statBar = enemyStatBar;
+        enemy.health.statBar = enemyStatBar;
+        enemyStatBar.SetHealthVisual(enemy.health.maxHealth, enemy.health.maxHealth);
+        enemyStatBar.SetShieldVisual(enemy.defensesPointBonnus);
+        enemyStatBar.SetAttackVisual(enemy.attackPointBonnus);
 
-        StartCoroutine(NextTurn());
-    }
-    public void Defend()
-    {
-        if (isPlayerTurn)
-        {
-            player.AddDefensePoint(player.defensePointGiven);
-            player.defenseParticle.Play();
-        }
-        else
-        {
-            enemy.AddDefensePoint(enemy.defensePointGiven);
-            enemy.defenseParticle.Play();
-        }
+        // Set enemy AI
+        enemyAI.controller = enemy;
+        enemyAI.playerController = player;
 
-        StartCoroutine(NextTurn());
-    }
-    public void Focus()
-    {
-        if (isPlayerTurn)
-        {
-            player.AddAttackPoint(player.attackPointGiven);
-            player.attackParticle.Play();
-        }
-        else
-        {
-            enemy.AddAttackPoint(enemy.attackPointGiven);
-            enemy.attackParticle.Play();
-        }
-
-        StartCoroutine(NextTurn());
-    }
-    public void Heal()
-    {
-        if (isPlayerTurn)
-        {
-            player.health.TakeHealth(10);
-            playerHealthBar.SetHealthBarVisual(player.health.currentHealth);
-            player.healthParticle.Play();
-        }
-        else
-        {
-            enemy.health.TakeHealth(10);
-            enemyHealthBar.SetHealthBarVisual(enemy.health.currentHealth);
-            enemy.healthParticle.Play();
-        }
-
-        StartCoroutine(NextTurn());
+        enemy.enemy = player;
     }
 }

@@ -30,9 +30,7 @@ public class ScoreManager : MonoBehaviour
     public void AddScore(int scoreGiven)
     {
         score += scoreGiven;
-        scoreTxt.transform.DOScale(1.2f, .08f).OnComplete(() => {
-            scoreTxt.text = score + " pts";
-            scoreTxt.transform.DOScale(1, .05f);
-        });
+        scoreTxt.text = score + " pts";
+        scoreTxt.transform.Bump(1.2f);
     }
 }
