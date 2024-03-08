@@ -82,6 +82,7 @@ public class CharacterController : MonoBehaviour
 
             defenseParticle.Play();
 
+            print(defensePointGiven);
             defensesPointBonnus += defensePointGiven;
             statBar.SetShieldVisual(defensesPointBonnus, equipmentDefensePoint);
 

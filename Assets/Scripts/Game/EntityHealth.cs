@@ -5,8 +5,7 @@ using TMPro;
 
 public class EntityHealth : MonoBehaviour
 {
-    public int maxHealth, currentHealth, maxEquipmentHealth;
-    int EquipmentHealth;
+    public int maxHealth, currentHealth;
 
     public StatsBar statBar;
     public ParticleSystem hitParticle;
@@ -21,21 +20,19 @@ public class EntityHealth : MonoBehaviour
 
     private void Start()
     {
-        currentHealth = maxHealth + EquipmentHealth;
+        currentHealth = maxHealth;
     }
 
     public void TakeHealth(int health)
     {
         currentHealth += health;
-        if (currentHealth > maxHealth + EquipmentHealth) currentHealth = maxHealth + EquipmentHealth;
+        if (currentHealth > maxHealth) currentHealth = maxHealth;
         if(currentHealth > maxHealth)
         {
             int tmp = currentHealth - maxHealth;
-            if (tmp > 0) EquipmentHealth = tmp;
-            else EquipmentHealth = 0;
 
         }
-        statBar.SetHealthVisual(currentHealth, maxHealth, EquipmentHealth);
+        statBar.SetHealthVisual(currentHealth, maxHealth);
     }
 
     public void TakeDamage(int damage)
@@ -45,7 +42,7 @@ public class EntityHealth : MonoBehaviour
         hitParticle.Play();
         currentHealth -= damage;
         if (currentHealth < 0) currentHealth = 0;
-        statBar.SetHealthVisual(currentHealth, maxHealth, EquipmentHealth);
+        statBar.SetHealthVisual(currentHealth, maxHealth);
 
         if (currentHealth <= 0)
         {
@@ -55,7 +52,7 @@ public class EntityHealth : MonoBehaviour
 
     void Die()
     {
-        transform.DesactiveInBump();
+        GetComponent<SpriteRenderer>().enabled = false;
         isDead = true;
     }
 }

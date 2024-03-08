@@ -8,7 +8,7 @@ public class Inventory : MonoBehaviour
 {
     // Inventory references
     public Image helmetImage, plateImage, feetImage, weaponImage;
-    ItemData helmetData, plateData, feetData, weaponData;
+    public ItemData helmetData, plateData, feetData, weaponData;
 
     public Transform inventoryButtonGO;
     public GameObject inventoryPanelGO;
@@ -18,10 +18,15 @@ public class Inventory : MonoBehaviour
     [HideInInspector] public CharacterController playerController;
 
     // Add item panel
-    ItemData item;
+    public ItemData item;
     public GameObject addItemPanelGO;
     public Image itemVisual;
     public TMP_Text itemNameTxt, itemDescriptionTxt;
+
+    private void Start()
+    {
+        EquipItemButton();
+    }
 
     public void InventoryButton()
     {
@@ -59,9 +64,8 @@ public class Inventory : MonoBehaviour
             case EquipmentType.Helmet:
                 if(helmetData != null)
                 {
-                    playerController.attackPointBonnus -= helmetData.damageGiven;
-                    playerController.defensePointGiven -= helmetData.defenseGiven;
-                    playerController.health.maxEquipmentHealth -= helmetData.healthGiven;
+                    playerController.equipmentAttackPoint -= helmetData.damageGiven;
+                    playerController.equipmentDefensePoint -= helmetData.defenseGiven;
                 }
                 helmetImage.sprite = item.visual;
                 helmetImage.transform.Bump(1.2f);
@@ -71,9 +75,8 @@ public class Inventory : MonoBehaviour
             case EquipmentType.Plate:
                 if (plateData != null)
                 {
-                    playerController.attackPointBonnus -= plateData.damageGiven;
-                    playerController.defensePointGiven -= plateData.defenseGiven;
-                    playerController.health.maxEquipmentHealth -= plateData.healthGiven;
+                    playerController.equipmentAttackPoint -= plateData.damageGiven;
+                    playerController.equipmentDefensePoint -= plateData.defenseGiven;
                 }
                 plateImage.sprite = item.visual;
                 plateImage.transform.Bump(1.2f);
@@ -83,9 +86,8 @@ public class Inventory : MonoBehaviour
             case EquipmentType.Feet:
                 if (feetData != null)
                 {
-                    playerController.attackPointBonnus -= feetData.damageGiven;
-                    playerController.defensePointGiven -= feetData.defenseGiven;
-                    playerController.health.maxEquipmentHealth -= feetData.healthGiven;
+                    playerController.equipmentAttackPoint -= feetData.damageGiven;
+                    playerController.equipmentDefensePoint -= feetData.defenseGiven;
                 }
                 feetImage.sprite = item.visual;
                 feetImage.transform.Bump(1.2f);
@@ -95,9 +97,8 @@ public class Inventory : MonoBehaviour
             case EquipmentType.Weapon:
                 if (weaponData != null)
                 {
-                    playerController.attackPointBonnus -= weaponData.damageGiven;
-                    playerController.defensePointGiven -= weaponData.defenseGiven;
-                    playerController.health.maxEquipmentHealth -= weaponData.healthGiven;
+                    playerController.equipmentAttackPoint -= weaponData.damageGiven;
+                    playerController.equipmentDefensePoint -= weaponData.defenseGiven;
                 }
                 weaponImage.sprite = item.visual;
                 weaponImage.transform.Bump(1.2f);
@@ -107,7 +108,6 @@ public class Inventory : MonoBehaviour
 
         playerController.equipmentAttackPoint += item.damageGiven;
         playerController.equipmentDefensePoint += item.defenseGiven;
-        playerController.health.maxEquipmentHealth += item.healthGiven;
 
         addItemPanelGO.SetActive(false);
     }

@@ -44,7 +44,7 @@ public class LoopManager : MonoBehaviour
         player.loopManager = this;
         player.statBar = playerStatBar;
         player.health.statBar = playerStatBar;
-        playerStatBar.SetHealthVisual(player.health.maxHealth, player.health.maxHealth, player.health.maxEquipmentHealth);
+        playerStatBar.SetHealthVisual(player.health.maxHealth, player.health.maxHealth);
         playerStatBar.SetShieldVisual(player.defensesPointBonnus,player.equipmentDefensePoint);
         playerStatBar.SetAttackVisual(player.attackPointBonnus, player.equipmentAttackPoint);
 
@@ -138,7 +138,7 @@ public class LoopManager : MonoBehaviour
         enemy.loopManager = this;
         enemy.statBar = enemyStatBar;
         enemy.health.statBar = enemyStatBar;
-        enemyStatBar.SetHealthVisual(enemy.health.maxHealth, enemy.health.maxHealth, enemy.health.maxEquipmentHealth);
+        enemyStatBar.SetHealthVisual(enemy.health.maxHealth, enemy.health.maxHealth);
         enemyStatBar.SetShieldVisual(enemy.defensesPointBonnus, enemy.equipmentDefensePoint);
         enemyStatBar.SetAttackVisual(enemy.attackPointBonnus, enemy.equipmentAttackPoint);
 

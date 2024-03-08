@@ -38,6 +38,7 @@ public class EnemyAI
         {
             int[] tmp = { 1, 2, 3, 4 };
             lastAction = Random.Range(1, tmp.Length);
+            if (lastAction == 4) lastAction = Random.Range(1, tmp.Length - 1);
             //Debug.Log("Random : "+ lastAction);
             return lastAction;
         }
