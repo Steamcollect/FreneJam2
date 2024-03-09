@@ -112,11 +112,18 @@ public class CharacterController : MonoBehaviour
         statBar.SetShieldVisual(defensesPointBonnus, equipmentDefensePoint);
     }
 
+    public void SetStatBar()
+    {
+        statBar.SetHealthVisual(health.maxHealth, health.maxHealth);
+        statBar.SetShieldVisual(defensesPointBonnus, equipmentDefensePoint);
+        statBar.SetAttackVisual(attackPointBonnus, equipmentAttackPoint);
+    }
+
     IEnumerator ChangeSprite(Sprite newSprite)
     {
         graphics.sprite = newSprite;
 
-        yield return new WaitForSeconds(.2f);
+        yield return new WaitForSeconds(.3f);
         graphics.sprite = idleSprite;
     }
 }

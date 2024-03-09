@@ -2,13 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class LoopManager : MonoBehaviour
 {
     public GameObject playerGO;
 
     // Enemy stats
-    public List<GameObject> enemysPrefabs = new List<GameObject>();
+    [SerializeField] List<GameObject> enemysPrefabs = new List<GameObject>();
+    List<GameObject> enemyToSpawn = new List<GameObject>();
     EnemyAI enemyAI;
     public Vector2 enemyPos;
 
@@ -30,6 +32,7 @@ public class LoopManager : MonoBehaviour
     {
         scoreManager = GetComponent<ScoreManager>();
         inventory = GetComponent<Inventory>();
+        inventory.loopManager = this;
 
         for (int i = 0; i < playerButtons.Length; i++)
         {
@@ -44,24 +47,28 @@ public class LoopManager : MonoBehaviour
         player.loopManager = this;
         player.statBar = playerStatBar;
         player.health.statBar = playerStatBar;
-        playerStatBar.SetHealthVisual(player.health.maxHealth, player.health.maxHealth);
-        playerStatBar.SetShieldVisual(player.defensesPointBonnus,player.equipmentDefensePoint);
-        playerStatBar.SetAttackVisual(player.attackPointBonnus, player.equipmentAttackPoint);
+        player.SetStatBar();
+        inventory.playerController = player;
 
         enemyAI = new EnemyAI();
 
-        CreateNewEnemy();
-
-        player.enemy = enemy;
-        inventory.playerController = player;
-
-        StartCoroutine(NextTurn());
+        StartCoroutine(CreateNewEnemy());
     }
 
     public IEnumerator NextTurn()
     {
         if (enemy.health.isDead)
         {
+            // Close player button
+            for (int i = 0; i < playerButtons.Length; i++)
+            {
+                playerButtons[i].interactable = false;
+                playerButtons[i].transform.localScale = Vector3.one;
+                playerInteractiveButtons[i].enabled = false;
+            }
+
+            isPlayerTurn = false;
+
             scoreManager.AddScore(5);
             if(Random.Range(0,100) <= itemDropPercentage)
             {
@@ -69,7 +76,7 @@ public class LoopManager : MonoBehaviour
 
                 int tmp = Random.Range(0, items.Count);
                 inventory.SetAddItemPanel(items[tmp]);
-                items.RemoveAt(tmp);
+                //items.RemoveAt(tmp);
             }
         }
         else if (player.health.isDead)
@@ -128,24 +135,35 @@ public class LoopManager : MonoBehaviour
         }
     }
 
-    void CreateNewEnemy()
+    public IEnumerator CreateNewEnemy()
     {
+        if (enemyToSpawn.Count <= 0)
+        {
+            print("Reload enemys list");
+            enemyToSpawn = new List<GameObject>(enemysPrefabs);
+        }
+
         // Get random enemy
-        int currentEnemyId = Random.Range(0, enemysPrefabs.Count);
-        enemy = Instantiate(enemysPrefabs[currentEnemyId], enemyPos, Quaternion.identity).GetComponent<CharacterController>();
-        enemysPrefabs.RemoveAt(currentEnemyId);
+        int currentEnemyId = Random.Range(0, enemyToSpawn.Count);
+        enemy = Instantiate(enemyToSpawn[currentEnemyId], new Vector2(10, 0), Quaternion.identity).GetComponent<CharacterController>();
+        enemyToSpawn.RemoveAt(currentEnemyId);
+        enemy.transform.DOMove(enemyPos, 1.5f);
         // Set enemy stats
         enemy.loopManager = this;
         enemy.statBar = enemyStatBar;
         enemy.health.statBar = enemyStatBar;
-        enemyStatBar.SetHealthVisual(enemy.health.maxHealth, enemy.health.maxHealth);
-        enemyStatBar.SetShieldVisual(enemy.defensesPointBonnus, enemy.equipmentDefensePoint);
-        enemyStatBar.SetAttackVisual(enemy.attackPointBonnus, enemy.equipmentAttackPoint);
+        enemy.SetStatBar();
 
         // Set enemy AI
         enemyAI.controller = enemy;
         enemyAI.playerController = player;
 
         enemy.enemy = player;
+        player.enemy = enemy;
+
+
+        yield return new WaitForSeconds(1f);
+
+        StartCoroutine(NextTurn());
     }
 }

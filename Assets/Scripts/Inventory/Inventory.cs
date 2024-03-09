@@ -8,7 +8,7 @@ public class Inventory : MonoBehaviour
 {
     // Inventory references
     public Image helmetImage, plateImage, feetImage, weaponImage;
-    public ItemData helmetData, plateData, feetData, weaponData;
+    ItemData helmetData, plateData, feetData, weaponData;
 
     public Transform inventoryButtonGO;
     public GameObject inventoryPanelGO;
@@ -23,6 +23,8 @@ public class Inventory : MonoBehaviour
     public Image itemVisual;
     public TMP_Text itemNameTxt, itemDescriptionTxt;
     public TMP_Text takeItemButtonTxt;
+
+    [HideInInspector]public LoopManager loopManager;
 
     public void InventoryButton()
     {
@@ -58,6 +60,7 @@ public class Inventory : MonoBehaviour
     public void SkipItemButton()
     {
         addItemPanelGO.SetActive(false);
+        StartCoroutine(loopManager.CreateNewEnemy());
     }
     public void EquipItemButton()
     {
@@ -126,6 +129,10 @@ public class Inventory : MonoBehaviour
         playerController.equipmentAttackPointGiven += item.attackPointGiven;
         playerController.equipmentDefensePointGiven += item.defensePointGiven;
 
+        playerController.SetStatBar();
+
         addItemPanelGO.SetActive(false);
+
+        StartCoroutine(loopManager.CreateNewEnemy());
     }
 }

@@ -7624,10 +7624,6 @@ MonoBehaviour:
   plateImage: {fileID: 1479074838}
   feetImage: {fileID: 1507379752}
   weaponImage: {fileID: 1952633542}
-  helmetData: {fileID: 0}
-  plateData: {fileID: 0}
-  feetData: {fileID: 0}
-  weaponData: {fileID: 0}
   inventoryButtonGO: {fileID: 407857482}
   inventoryPanelGO: {fileID: 792025512}
   openCloseInventorySound:
@@ -7640,6 +7636,7 @@ MonoBehaviour:
   itemNameTxt: {fileID: 1042817342}
   itemDescriptionTxt: {fileID: 1385696867}
   takeItemButtonTxt: {fileID: 1923755709}
+  loopManager: {fileID: 0}
 --- !u!1 &1790617033
 GameObject:
   m_ObjectHideFlags: 0
@@ -24017,10 +24014,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 2
+  equipmentHealthPointGiven: 0
   attackPointBonnus: 0
   defensesPointBonnus: 0
   equipmentAttackPoint: 0
+  equipmentAttackPointGiven: 0
   equipmentDefensePoint: 0
+  equipmentDefensePointGiven: 0
   attackPointGiven: 1
   defensePointGiven: 1
   healPointGiven: 2
