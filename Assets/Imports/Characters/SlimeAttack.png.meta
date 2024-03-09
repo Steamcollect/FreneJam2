@@ -1,13 +1,10 @@
 fileFormatVersion: 2
-guid: cbaea615609ebec4395b25f5f319a147
+guid: 8a2907e2bdc5d3c44b893cf396608ea0
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5320012714913942379
-    second: SkullIdle_0
-  - first:
-      213: -8067928993887084945
-    second: SkullIdle_1
+      213: 8590765030210850243
+    second: SlimeAttack_0
   externalObjects: {}
   serializedVersion: 12
   mipmaps:
@@ -101,13 +98,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: SkullIdle_0
+      name: SlimeAttack_0
       rect:
         serializedVersion: 2
-        x: 27
-        y: 104
-        width: 461
-        height: 335
+        x: 20
+        y: 137
+        width: 394
+        height: 311
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,29 +112,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b6bc109a06b74d940800000000000000
-      internalID: 5320012714913942379
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: SkullIdle_1
-      rect:
-        serializedVersion: 2
-        x: 111
-        y: 0
-        width: 274
-        height: 80
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: f6e19466355f80090800000000000000
-      internalID: -8067928993887084945
+      spriteID: 3cdc0967747883770800000000000000
+      internalID: 8590765030210850243
       vertices: []
       indices: 
       edges: []
@@ -153,8 +129,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      SkullIdle_0: 5320012714913942379
-      SkullIdle_1: -8067928993887084945
+      SlimeAttack_0: 8590765030210850243
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

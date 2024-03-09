@@ -1,13 +1,16 @@
 fileFormatVersion: 2
-guid: 055564b060e58f646a342fcc4353b744
+guid: bafb5076505263749b066574e9cf5b49
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 950673509794898566
-    second: SkullHit_0
+      213: 6818016478689895773
+    second: LitleKnightAttack_0
   - first:
-      213: -1341719987901443196
-    second: SkullHit_1
+      213: -8530444822352692299
+    second: LitleKnightAttack_1
+  - first:
+      213: 1369700989923065936
+    second: LitleKnightAttack_2
   externalObjects: {}
   serializedVersion: 12
   mipmaps:
@@ -101,13 +104,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: SkullHit_0
+      name: LitleKnightAttack_0
       rect:
         serializedVersion: 2
-        x: 77
-        y: 122
-        width: 389
-        height: 374
+        x: 138
+        y: 112
+        width: 451
+        height: 483
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,20 +118,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 682e2b03588713d00800000000000000
-      internalID: 950673509794898566
+      spriteID: d55221d2dd57e9e50800000000000000
+      internalID: 6818016478689895773
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SkullHit_1
+      name: LitleKnightAttack_1
       rect:
         serializedVersion: 2
-        x: 111
-        y: 0
-        width: 274
-        height: 80
+        x: 165
+        y: 435
+        width: 8
+        height: 17
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -136,8 +139,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 483d71d97c0416de0800000000000000
-      internalID: -1341719987901443196
+      spriteID: 5bbf89b51a5cd9980800000000000000
+      internalID: -8530444822352692299
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LitleKnightAttack_2
+      rect:
+        serializedVersion: 2
+        x: 137
+        y: 362
+        width: 16
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0508dd81bc7220310800000000000000
+      internalID: 1369700989923065936
       vertices: []
       indices: 
       edges: []
@@ -153,8 +177,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      SkullHit_0: 950673509794898566
-      SkullHit_1: -1341719987901443196
+      LitleKnightAttack_0: 6818016478689895773
+      LitleKnightAttack_1: -8530444822352692299
+      LitleKnightAttack_2: 1369700989923065936
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

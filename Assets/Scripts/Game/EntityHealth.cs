@@ -9,14 +9,8 @@ public class EntityHealth : MonoBehaviour
 
     public StatsBar statBar;
     public ParticleSystem hitParticle;
-    Animator anim;
 
     public bool isDead = false;
-
-    private void Awake()
-    {
-        anim = GetComponent<Animator>();
-    }
 
     private void Start()
     {
@@ -37,7 +31,6 @@ public class EntityHealth : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        anim.SetTrigger("TakeDamage");
         transform.Bump(1.5f);
         hitParticle.Play();
         currentHealth -= damage;

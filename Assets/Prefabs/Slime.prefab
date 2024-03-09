@@ -14498,7 +14498,7 @@ GameObject:
   - component: {fileID: 3146086066841159714}
   - component: {fileID: 6664943024290335529}
   m_Layer: 0
-  m_Name: Enemy
+  m_Name: Slime
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14564,7 +14564,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: cbaea615609ebec4395b25f5f319a147, type: 3}
+  m_Sprite: {fileID: 21300000, guid: dfc34de2c033dda4bbd207141be6910b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -14585,7 +14585,7 @@ Animator:
   m_GameObject: {fileID: 6795033536581040428}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 0c4ba856cd2e8f840946984009b3369c, type: 2}
+  m_Controller: {fileID: 9100000, guid: ded106ae605e383459e9ef6c9794f87e, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -14609,12 +14609,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34cae1fed6dbafa4986079a1ffaa1482, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 2
+  damage: 4
   attackPointBonnus: 0
   defensesPointBonnus: 0
+  equipmentAttackPoint: 0
+  equipmentDefensePoint: 0
   attackPointGiven: 1
   defensePointGiven: 1
+  healPointGiven: 1
   canDoAction: 0
+  idleSprite: {fileID: 21300000, guid: dfc34de2c033dda4bbd207141be6910b, type: 3}
+  hitSprite: {fileID: 21300000, guid: 8841624ad477eb944bfc599b8c33a040, type: 3}
+  attackSprite: {fileID: 21300000, guid: 8a2907e2bdc5d3c44b893cf396608ea0, type: 3}
   healthParticle: {fileID: 4279151024808083068}
   attackParticle: {fileID: 5765531578915821515}
   defenseParticle: {fileID: 1379413567746842731}
@@ -14651,7 +14657,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97819067a22bd6146bcce511cfb3ccdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 8
+  maxHealth: 3
   currentHealth: 0
   statBar: {fileID: 0}
   hitParticle: {fileID: 2434793251677757649}

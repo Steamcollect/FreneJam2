@@ -18,8 +18,6 @@ public class StatsBar : MonoBehaviour
     }
     public void SetShieldVisual(int shield, int equipmentShield)
     {
-        print(shield + ", " + equipmentShield);
-
         if (shield + equipmentShield <= 0 && shieldTxt.text != "0") shieldGO.transform.DesactiveInBump();
         else if (shield > 0) shieldGO.transform.Bump(1.2f);
 

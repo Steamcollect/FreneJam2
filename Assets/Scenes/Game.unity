@@ -7635,11 +7635,11 @@ MonoBehaviour:
   - {fileID: 8300000, guid: ee6d51dd9bd1454458ed0868e78cd951, type: 3}
   - {fileID: 8300000, guid: a9b6597e3a8ac024e8c04c94ac63b951, type: 3}
   playerController: {fileID: 0}
-  item: {fileID: 11400000, guid: 109ae308fd1fb964aa4683ced16fc7de, type: 2}
   addItemPanelGO: {fileID: 133163695}
   itemVisual: {fileID: 622213992}
   itemNameTxt: {fileID: 1042817342}
   itemDescriptionTxt: {fileID: 1385696867}
+  takeItemButtonTxt: {fileID: 1923755709}
 --- !u!1 &1790617033
 GameObject:
   m_ObjectHideFlags: 0
@@ -9330,7 +9330,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97819067a22bd6146bcce511cfb3ccdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 10
+  maxHealth: 20
   currentHealth: 0
   statBar: {fileID: 0}
   hitParticle: {fileID: 8920050606818720830}
@@ -9349,7 +9349,7 @@ GameObject:
   - component: {fileID: 8270643945423532834}
   - component: {fileID: 364998400734720041}
   m_Layer: 0
-  m_Name: Slime
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19187,7 +19187,7 @@ Animator:
   m_GameObject: {fileID: 514202818323448364}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 9f1e0ebf3ac8b8344bdb64dabb76c6f0, type: 2}
+  m_Controller: {fileID: 9100000, guid: ded106ae605e383459e9ef6c9794f87e, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -23993,7 +23993,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 3032439450092817888, guid: 2d49be45c1e153547be4576dc78bfa81, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e7d0ff95a71485e40a2e758c96806acb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -24016,14 +24016,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34cae1fed6dbafa4986079a1ffaa1482, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 3
+  damage: 2
   attackPointBonnus: 0
   defensesPointBonnus: 0
   equipmentAttackPoint: 0
   equipmentDefensePoint: 0
   attackPointGiven: 1
   defensePointGiven: 1
+  healPointGiven: 2
   canDoAction: 0
+  idleSprite: {fileID: 21300000, guid: e7d0ff95a71485e40a2e758c96806acb, type: 3}
+  hitSprite: {fileID: 21300000, guid: 26ff50494ff8cb246b9caeae080fd60b, type: 3}
+  attackSprite: {fileID: 21300000, guid: bafb5076505263749b066574e9cf5b49, type: 3}
   healthParticle: {fileID: 7065170820704028028}
   attackParticle: {fileID: 679293875830451403}
   defenseParticle: {fileID: 5353292412327058283}
