@@ -36,7 +36,8 @@ public class CharacterController : MonoBehaviour
     }
     int CalculateDamageTaken(int totalDamage)
     {
-        int damageBlocked = defensePointGiven + equipmentDefensePoint;
+        int damageBlocked = defensesPointBonnus + equipmentDefensePoint;
+        print(damageBlocked);
         if(this == loopManager.player)
         {
             if (damageBlocked > totalDamage) damageBlocked = totalDamage;
@@ -54,6 +55,8 @@ public class CharacterController : MonoBehaviour
         {
             if (this == loopManager.player) loopManager.damagedReceived = damage;
             defensesPointBonnus = 0;
+
+            print(totalDamage + ", "+ damage);
 
             return damage;
         }
