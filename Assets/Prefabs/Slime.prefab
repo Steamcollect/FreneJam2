@@ -14609,11 +14609,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34cae1fed6dbafa4986079a1ffaa1482, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 4
+  damage: 10
+  equipmentHealthPointGiven: 0
   attackPointBonnus: 0
   defensesPointBonnus: 0
   equipmentAttackPoint: 0
+  equipmentAttackPointGiven: 0
   equipmentDefensePoint: 0
+  equipmentDefensePointGiven: 0
   attackPointGiven: 1
   defensePointGiven: 1
   healPointGiven: 1

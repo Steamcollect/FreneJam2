@@ -7,30 +7,36 @@ using DG.Tweening;
 public class LoopManager : MonoBehaviour
 {
     public GameObject playerGO;
+    bool isPlayerTurn = false;
 
-    // Enemy stats
+    [Header("Enemy references")]
     [SerializeField] List<GameObject> enemysPrefabs = new List<GameObject>();
     List<GameObject> enemyToSpawn = new List<GameObject>();
     EnemyAI enemyAI;
     public Vector2 enemyPos;
 
-    CharacterController player, enemy;
+    // Stats bar
+    [HideInInspector] public CharacterController player, enemy;
     public StatsBar playerStatBar, enemyStatBar;
 
+    [Header("Buttons references")]
     public Button[] playerButtons;
     List<InteractiveButton> playerInteractiveButtons = new List<InteractiveButton>();
 
-    public bool isPlayerTurn = false;
+    [HideInInspector] public int waveCount, enemysKilled, damagedInflicted, damagedReceived, damagedBlocked, lifeRecorvery;
 
-    public List<ItemData> items = new List<ItemData>();
-
+    // Items
     public int itemDropPercentage;
+    public List<ItemData> items = new List<ItemData>();
+    
     ScoreManager scoreManager;
+    DeathManager deathManager;
     Inventory inventory;
 
     private void Awake()
     {
         scoreManager = GetComponent<ScoreManager>();
+        deathManager = GetComponent<DeathManager>();
         inventory = GetComponent<Inventory>();
         inventory.loopManager = this;
 
@@ -52,11 +58,21 @@ public class LoopManager : MonoBehaviour
 
         enemyAI = new EnemyAI();
 
+        // unable player button
+        for (int i = 0; i < playerButtons.Length; i++)
+        {
+            playerButtons[i].interactable = false;
+            playerButtons[i].transform.localScale = Vector3.one;
+            playerInteractiveButtons[i].enabled = false;
+        }
+
         StartCoroutine(CreateNewEnemy());
     }
 
     public IEnumerator NextTurn()
     {
+        yield return new WaitForSeconds(1.2f);
+
         if (enemy.health.isDead)
         {
             // Close player button
@@ -69,11 +85,11 @@ public class LoopManager : MonoBehaviour
 
             isPlayerTurn = false;
 
+            enemysKilled++;
             scoreManager.AddScore(5);
+         
             if(Random.Range(0,100) <= itemDropPercentage)
             {
-                yield return new WaitForSeconds(1f);
-
                 int tmp = Random.Range(0, items.Count);
                 inventory.SetAddItemPanel(items[tmp]);
                 //items.RemoveAt(tmp);
@@ -81,7 +97,9 @@ public class LoopManager : MonoBehaviour
         }
         else if (player.health.isDead)
         {
-
+            if (!inventory.isInventoryOpon) inventory.InventoryButton();
+            deathManager.SetTextInfos(waveCount, enemysKilled, damagedInflicted, damagedReceived, damagedBlocked, lifeRecorvery);
+            deathManager.OpenDeathPanel();
         }
         else
         {
@@ -91,6 +109,7 @@ public class LoopManager : MonoBehaviour
 
             if (!isPlayerTurn)
             {
+                // unable player button
                 for (int i = 0; i < playerButtons.Length; i++)
                 {
                     playerButtons[i].interactable = false;
@@ -98,8 +117,6 @@ public class LoopManager : MonoBehaviour
                     playerInteractiveButtons[i].enabled = false;
                 }
             }
-
-            yield return new WaitForSeconds(1.2f);
 
             if (isPlayerTurn)
             {
@@ -109,8 +126,7 @@ public class LoopManager : MonoBehaviour
                     playerInteractiveButtons[i].enabled = true;
                 }
             }
-
-            if (!isPlayerTurn)
+            else
             {
                 switch (enemyAI.SelectAction())
                 {
@@ -134,14 +150,10 @@ public class LoopManager : MonoBehaviour
             }
         }
     }
-
+     
     public IEnumerator CreateNewEnemy()
     {
-        if (enemyToSpawn.Count <= 0)
-        {
-            print("Reload enemys list");
-            enemyToSpawn = new List<GameObject>(enemysPrefabs);
-        }
+        if (enemyToSpawn.Count <= 0) enemyToSpawn = new List<GameObject>(enemysPrefabs);
 
         // Get random enemy
         int currentEnemyId = Random.Range(0, enemyToSpawn.Count);
@@ -161,6 +173,7 @@ public class LoopManager : MonoBehaviour
         enemy.enemy = player;
         player.enemy = enemy;
 
+        waveCount++;
 
         yield return new WaitForSeconds(1f);
 

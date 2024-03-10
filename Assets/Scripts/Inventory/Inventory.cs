@@ -12,7 +12,7 @@ public class Inventory : MonoBehaviour
 
     public Transform inventoryButtonGO;
     public GameObject inventoryPanelGO;
-    bool isInventoryOpon = false;
+    [HideInInspector] public bool isInventoryOpon = false;
 
     public AudioClip[] openCloseInventorySound;
     [HideInInspector] public CharacterController playerController;
