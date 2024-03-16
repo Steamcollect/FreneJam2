@@ -22,7 +22,7 @@ public class EnemyAI
             lastAction = 1;
             return lastAction;
         }
-        else if (controller.health.currentHealth <= playerController.damage)
+        else if (controller.health.currentHealth <= playerController.damage && controller.health.currentHealth < controller.health.maxHealth)
         {
             //Debug.Log("Heal");
             lastAction = 4;
@@ -37,6 +37,7 @@ public class EnemyAI
         else
         {
             int[] tmp = { 1, 2, 3, 4 };
+            if (controller.health.currentHealth == controller.health.maxHealth) tmp = new int[] { 1, 2, 3};
             lastAction = Random.Range(1, tmp.Length);
             if (lastAction == 4) lastAction = Random.Range(1, tmp.Length - 1);
             //Debug.Log("Random : "+ lastAction);

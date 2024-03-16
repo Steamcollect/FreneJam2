@@ -5,7 +5,7 @@ using UnityEngine;
 public class CharacterController : MonoBehaviour
 {
     public int damage;
-    public int equipmentHealthPointGiven, attackPointBonnus, defensesPointBonnus, equipmentAttackPoint, equipmentAttackPointGiven, equipmentDefensePoint, equipmentDefensePointGiven;
+    public int equipmentHealthPoint, attackPointBonnus, defensesPointBonnus, equipmentAttackPoint, equipmentDefensePoint;
     public int attackPointGiven, defensePointGiven, healPointGiven;
 
     public bool canDoAction;
@@ -37,7 +37,6 @@ public class CharacterController : MonoBehaviour
     int CalculateDamageTaken(int totalDamage)
     {
         int damageBlocked = defensesPointBonnus + equipmentDefensePoint;
-        print(damageBlocked);
         if(this == loopManager.player)
         {
             if (damageBlocked > totalDamage) damageBlocked = totalDamage;
@@ -68,13 +67,12 @@ public class CharacterController : MonoBehaviour
         {
             if (attackSound.Length > 0) AudioManager.instance.PlayClipAt(0, transform.position, attackSound[Random.Range(0, attackSound.Length)]);
 
-
             StartCoroutine(ChangeSprite(attackSprite));
             int damage = CalculateAttackDamage();
             if (this == loopManager.player) loopManager.damagedInflicted += damage;
             enemy.TakeDamage(damage);
             attackPointBonnus = 0;
-            statBar.SetAttackVisual(attackPointBonnus, equipmentAttackPoint);
+            statBar.SetAttackVisual(this.damage, equipmentAttackPoint);
 
             StartCoroutine(loopManager.NextTurn());
         }
@@ -87,8 +85,8 @@ public class CharacterController : MonoBehaviour
 
             attackParticle.Play();
 
-            attackPointBonnus += attackPointGiven + equipmentAttackPointGiven;
-            statBar.SetAttackVisual(attackPointBonnus, equipmentAttackPoint);
+            attackPointBonnus += attackPointGiven;
+            statBar.SetAttackVisual(attackPointBonnus + damage, equipmentAttackPoint);
 
             StartCoroutine(loopManager.NextTurn());
         }        
@@ -101,7 +99,7 @@ public class CharacterController : MonoBehaviour
 
             defenseParticle.Play();
 
-            defensesPointBonnus += defensePointGiven + equipmentDefensePointGiven;
+            defensesPointBonnus += defensePointGiven;
             statBar.SetShieldVisual(defensesPointBonnus, equipmentDefensePoint);
 
             StartCoroutine(loopManager.NextTurn());
@@ -114,7 +112,7 @@ public class CharacterController : MonoBehaviour
             if (healSound.Length > 0) AudioManager.instance.PlayClipAt(0, transform.position, healSound[Random.Range(0, healSound.Length)]);
             healthParticle.Play();
 
-            int healthRecorvery = healPointGiven + equipmentHealthPointGiven;
+            int healthRecorvery = healPointGiven + equipmentHealthPoint;
             if (health.currentHealth + healthRecorvery > health.maxHealth) healthRecorvery = health.maxHealth - health.currentHealth;
 
             if (this == loopManager.player) loopManager.lifeRecorvery = healthRecorvery;
@@ -136,7 +134,7 @@ public class CharacterController : MonoBehaviour
     {
         statBar.SetHealthVisual(health.maxHealth, health.maxHealth);
         statBar.SetShieldVisual(defensesPointBonnus, equipmentDefensePoint);
-        statBar.SetAttackVisual(attackPointBonnus, equipmentAttackPoint);
+        statBar.SetAttackVisual(attackPointBonnus + damage, equipmentAttackPoint);
     }
 
     IEnumerator ChangeSprite(Sprite newSprite)

@@ -4,13 +4,14 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
 
-public class DeathManager : MonoBehaviour
+public class GameOverManager : MonoBehaviour
 {
     public GameObject deathPanelGO;
-    public TMP_Text waveCountTxt, enemysKilledTxt, damagedInflictedTxt, damageReceivedTxt, damagedBlockedTxt, lifeRecorveryTxt;
+    public TMP_Text scoreTxt, waveCountTxt, enemysKilledTxt, damagedInflictedTxt, damageReceivedTxt, damagedBlockedTxt, lifeRecorveryTxt;
 
-    public void SetTextInfos(int waveCount, int enemysKilled, int damagedInflicted, int damagedReceived, int damagedBlocked, int lifeRecorvery)
+    public void SetTextInfos(int score, int waveCount, int enemysKilled, int damagedInflicted, int damagedReceived, int damagedBlocked, int lifeRecorvery)
     {
+        scoreTxt.text = score.ToString();
         waveCountTxt.text = waveCount.ToString();
         enemysKilledTxt.text = enemysKilled.ToString();
         damagedInflictedTxt.text = damagedInflicted.ToString();

@@ -30,13 +30,13 @@ public class LoopManager : MonoBehaviour
     public List<ItemData> items = new List<ItemData>();
     
     ScoreManager scoreManager;
-    DeathManager deathManager;
+    GameOverManager deathManager;
     Inventory inventory;
 
     private void Awake()
     {
         scoreManager = GetComponent<ScoreManager>();
-        deathManager = GetComponent<DeathManager>();
+        deathManager = GetComponent<GameOverManager>();
         inventory = GetComponent<Inventory>();
         inventory.loopManager = this;
 
@@ -71,18 +71,18 @@ public class LoopManager : MonoBehaviour
 
     public IEnumerator NextTurn()
     {
+        // Close player button
+        for (int i = 0; i < playerButtons.Length; i++)
+        {
+            playerButtons[i].interactable = false;
+            playerButtons[i].transform.localScale = Vector3.one;
+            playerInteractiveButtons[i].enabled = false;
+        }
+
         yield return new WaitForSeconds(1.2f);
 
         if (enemy.health.isDead)
         {
-            // Close player button
-            for (int i = 0; i < playerButtons.Length; i++)
-            {
-                playerButtons[i].interactable = false;
-                playerButtons[i].transform.localScale = Vector3.one;
-                playerInteractiveButtons[i].enabled = false;
-            }
-
             isPlayerTurn = false;
 
             enemysKilled++;
@@ -98,7 +98,7 @@ public class LoopManager : MonoBehaviour
         else if (player.health.isDead)
         {
             if (!inventory.isInventoryOpon) inventory.InventoryButton();
-            deathManager.SetTextInfos(waveCount, enemysKilled, damagedInflicted, damagedReceived, damagedBlocked, lifeRecorvery);
+            deathManager.SetTextInfos(scoreManager.score, waveCount, enemysKilled, damagedInflicted, damagedReceived, damagedBlocked, lifeRecorvery);
             deathManager.OpenDeathPanel();
         }
         else

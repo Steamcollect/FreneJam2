@@ -10,8 +10,6 @@ public class ItemData : ScriptableObject
 
     public Sprite visual;
 
-    public int defenseGiven;
-    public int damageGiven;
     public int healthPointGiven;
     public int attackPointGiven;
     public int defensePointGiven;
@@ -22,6 +20,7 @@ public class ItemData : ScriptableObject
 [System.Serializable]
 public enum EquipmentType
 {
+    Comsumable,
     Helmet,
     Plate,
     Feet,

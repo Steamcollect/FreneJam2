@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: deebe42afb5ebe746aa82b4cf240ecd7, type: 3}
-  m_Name: Sword
+  m_Name: SoldatHelmet
   m_EditorClassIdentifier: 
-  itemName: Sword
-  itemDescription: "Un bonne grosse \"\xE9p\xE9e\""
-  visual: {fileID: 712035800519618848, guid: ce9325652957c5d4dbec92971ec5ff6b, type: 3}
-  defenseGiven: 1
-  damageGiven: 2
-  healthGiven: 3
-  equipmentType: 3
+  itemName: Soldat helmet
+  itemDescription: + 1 defense point
+  visual: {fileID: -1754625868, guid: 8ac59d98617e4b4428f2a818eb3817a4, type: 3}
+  healthPointGiven: 0
+  attackPointGiven: 0
+  defensePointGiven: 1
+  equipmentType: 1

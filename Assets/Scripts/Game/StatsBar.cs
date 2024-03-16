@@ -18,6 +18,8 @@ public class StatsBar : MonoBehaviour
     }
     public void SetShieldVisual(int shield, int equipmentShield)
     {
+        print("shield : " + shield + ", " + equipmentShield);
+
         if (shield + equipmentShield <= 0 && shieldTxt.text != "0") shieldGO.transform.DesactiveInBump();
         else if (shield + equipmentShield > 0) shieldGO.transform.Bump(1.2f);
 
@@ -28,10 +30,12 @@ public class StatsBar : MonoBehaviour
     
     public void SetAttackVisual(int attack, int equipmentAttack)
     {
-        if (attack + equipmentAttack <= 0 && AttackTxt.text != "+0") attackGO.transform.DesactiveInBump();
+        print("attack : " + attack + ", " + equipmentAttack);
+
+        if (attack + equipmentAttack <= 0 && AttackTxt.text != "0") attackGO.transform.DesactiveInBump();
         else if(attack + equipmentAttack > 0) attackGO.transform.Bump(1.2f);
 
-        AttackTxt.text = "+" + attack.ToString();
+        AttackTxt.text = attack.ToString();
         if (equipmentAttack > 0) equipmentAttackPoint.text = "+" + equipmentAttack.ToString();
         else equipmentAttackPoint.text = "";
     }

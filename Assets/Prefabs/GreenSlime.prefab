@@ -14498,7 +14498,7 @@ GameObject:
   - component: {fileID: 3146086066841159714}
   - component: {fileID: 6664943024290335529}
   m_Layer: 0
-  m_Name: Slime
+  m_Name: GreenSlime
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14565,7 +14565,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: dfc34de2c033dda4bbd207141be6910b, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.29622638, g: 1, b: 0.332528, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -14609,7 +14609,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34cae1fed6dbafa4986079a1ffaa1482, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
+  damage: 2
   equipmentHealthPointGiven: 0
   attackPointBonnus: 0
   defensesPointBonnus: 0
@@ -14660,7 +14660,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97819067a22bd6146bcce511cfb3ccdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 3
+  maxHealth: 5
   currentHealth: 0
   statBar: {fileID: 0}
   hitParticle: {fileID: 2434793251677757649}
