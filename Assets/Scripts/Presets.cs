@@ -23,4 +23,18 @@ public static class Presets
             t.DOScale(1, .07f);
         });
     }
+
+    public static T GetRandom<T>(this List<T> list)
+    {
+        return list[Random.Range(0, list.Count)];
+    }
+    public static T GetRandom<T>(this T[] list)
+    {
+        return list[Random.Range(0, list.Length)];
+    }
+
+    public static float GetRandomBetween(this Vector2 vector2)
+    {
+        return Random.Range(vector2.x, vector2.y);
+    }
 }

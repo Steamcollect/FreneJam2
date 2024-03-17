@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: DamagePotion
   m_EditorClassIdentifier: 
   itemName: Attack potion
-  itemDescription: Give you 10 temporary attack point
+  itemDescription: Give you 5 temporary attack point
   visual: {fileID: -1804604877, guid: 8ac59d98617e4b4428f2a818eb3817a4, type: 3}
-  healthPointGiven: 0
-  attackPointGiven: 10
+  healthPointGiven: 5
+  attackPointGiven: 0
   defensePointGiven: 0
   equipmentType: 0
+  consumableType: 2

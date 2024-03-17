@@ -15,6 +15,7 @@ public class ItemData : ScriptableObject
     public int defensePointGiven;
 
     public EquipmentType equipmentType;
+    public ConsumableType consumableType;
 }
 
 [System.Serializable]
@@ -25,4 +26,11 @@ public enum EquipmentType
     Plate,
     Feet,
     Weapon
+}
+[System.Serializable]
+public enum ConsumableType
+{
+    HealthPotion,
+    DefensePotion,
+    AttackPotion
 }

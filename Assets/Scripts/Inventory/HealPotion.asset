@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: HealPotion
   m_EditorClassIdentifier: 
   itemName: Health potion
-  itemDescription: Heal you 10 health point
+  itemDescription: Heal you 5 health point
   visual: {fileID: -1862379257, guid: 8ac59d98617e4b4428f2a818eb3817a4, type: 3}
-  healthPointGiven: 10
+  healthPointGiven: 5
   attackPointGiven: 0
   defensePointGiven: 0
   equipmentType: 0
+  consumableType: 0

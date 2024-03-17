@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Knight sword
   itemDescription: + 2 attack point
-  visual: {fileID: 712035800519618848, guid: ce9325652957c5d4dbec92971ec5ff6b, type: 3}
+  visual: {fileID: 1855650807, guid: 8ac59d98617e4b4428f2a818eb3817a4, type: 3}
   healthPointGiven: 0
   attackPointGiven: 2
   defensePointGiven: 0

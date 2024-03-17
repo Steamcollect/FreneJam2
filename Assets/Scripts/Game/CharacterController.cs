@@ -1,18 +1,35 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class CharacterController : MonoBehaviour
 {
     public int damage;
-    public int equipmentHealthPoint, attackPointBonnus, defensesPointBonnus, equipmentAttackPoint, equipmentDefensePoint;
-    public int attackPointGiven, defensePointGiven, healPointGiven;
+    [HideInInspector] public int equipmentHealthPoint, attackPointBonnus, defensesPointBonnus, equipmentAttackPoint, equipmentDefensePoint;
+    [HideInInspector] public int attackPointGiven, defensePointGiven, healPointGiven;
 
-    public bool canDoAction;
+    public int healPotionCount, defensePotionCount, attackPotionCount;
 
-    public Sprite idleSprite, hitSprite, attackSprite;
-    public ParticleSystem healthParticle, attackParticle, defenseParticle;
-    public AudioClip[] healSound, attackSound, focusSound, defenseSound;
+    [HideInInspector] public bool canDoAction;
+
+    [Header("Sprite references")]
+    public Sprite idleSprite;
+    public Sprite hitSprite;
+    public Sprite attackSprite;
+    [Header("Particle references")]
+    public ParticleSystem healthParticle;
+    public ParticleSystem attackParticle;
+    public ParticleSystem defenseParticle;
+    [Header("Sound references")]
+    public AudioClip[] healSound;
+    public AudioClip[] attackSound;
+    public AudioClip[] focusSound;
+    public AudioClip[] defenseSound;
+
+    [Header("Potion panel references")]
+    public GameObject potionPanel;
+    public TMP_Text healthPotionCountTxt, defensePotionCountTxt, attackPotionCountTxt;
 
     [HideInInspector]public EntityHealth health;
     [HideInInspector]public StatsBar statBar;
@@ -55,7 +72,7 @@ public class CharacterController : MonoBehaviour
             if (this == loopManager.player) loopManager.damagedReceived = damage;
             defensesPointBonnus = 0;
 
-            print(totalDamage + ", "+ damage);
+            //print(totalDamage + ", "+ damage);
 
             return damage;
         }
@@ -77,7 +94,7 @@ public class CharacterController : MonoBehaviour
             StartCoroutine(loopManager.NextTurn());
         }
     }
-    public void Focus()
+    public void Focus(int attackGiven)
     {
         if (canDoAction)
         {
@@ -85,13 +102,13 @@ public class CharacterController : MonoBehaviour
 
             attackParticle.Play();
 
-            attackPointBonnus += attackPointGiven;
+            attackPointBonnus += attackGiven == 0 ? attackPointGiven : attackGiven;
             statBar.SetAttackVisual(attackPointBonnus + damage, equipmentAttackPoint);
 
             StartCoroutine(loopManager.NextTurn());
         }        
     }
-    public void Defend()
+    public void Defend(int defenseGiven)
     {
         if (canDoAction)
         {
@@ -99,28 +116,67 @@ public class CharacterController : MonoBehaviour
 
             defenseParticle.Play();
 
-            defensesPointBonnus += defensePointGiven;
+            defensesPointBonnus += defenseGiven == 0 ? defensePointGiven : defenseGiven;
             statBar.SetShieldVisual(defensesPointBonnus, equipmentDefensePoint);
 
             StartCoroutine(loopManager.NextTurn());
         }        
     }
-    public void Heal()
+    public void Heal(int healthGiven)
     {
-        if (canDoAction)
+        if (healSound.Length > 0) AudioManager.instance.PlayClipAt(0, transform.position, healSound[Random.Range(0, healSound.Length)]);
+        healthParticle.Play();
+
+        int healthRecorvery = healthGiven == 0 ? healPointGiven + equipmentHealthPoint : healthGiven;
+        if (health.currentHealth + healthRecorvery > health.maxHealth) healthRecorvery = health.maxHealth - health.currentHealth;
+
+        if (this == loopManager.player) loopManager.lifeRecorvery = healthRecorvery;
+
+        health.TakeHealth(healthRecorvery);
+        StartCoroutine(loopManager.NextTurn());
+    }
+    public void UsePotionButton()
+    {
+        if(this == loopManager.player)
         {
-            if (healSound.Length > 0) AudioManager.instance.PlayClipAt(0, transform.position, healSound[Random.Range(0, healSound.Length)]);
-            healthParticle.Play();
+            // Set potion panel
+            potionPanel.SetActive(!potionPanel.activeSelf);
+            potionPanel.transform.Bump(1.1f);
 
-            int healthRecorvery = healPointGiven + equipmentHealthPoint;
-            if (health.currentHealth + healthRecorvery > health.maxHealth) healthRecorvery = health.maxHealth - health.currentHealth;
+            healthPotionCountTxt.text = "x" + healPotionCount.ToString();
+            defensePotionCountTxt.text = "x" + defensePotionCount.ToString();
+            attackPotionCountTxt.text = "x" + attackPotionCount.ToString();
+        }        
+    }
 
-            if (this == loopManager.player) loopManager.lifeRecorvery = healthRecorvery;
-
-            health.TakeHealth(healthRecorvery);
-            StartCoroutine(loopManager.NextTurn());
+    public void HealPotion()
+    {
+        if (canDoAction && healPotionCount > 0)
+        {
+            healPotionCount--;
+            Heal(5);
+            UsePotionButton();
         }
     }
+    public void DefensePotion()
+    {
+        if(defensePotionCount > 0)
+        {
+            defensePotionCount--;
+            Defend(5);
+            UsePotionButton();
+        }
+    }
+    public void AttackPotion()
+    {
+        if(attackPotionCount > 0)
+        {
+            attackPotionCount--;
+            Focus(5);
+            UsePotionButton();
+        }
+    }
+
 
     public void TakeDamage(int damage)
     {

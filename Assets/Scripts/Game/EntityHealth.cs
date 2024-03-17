@@ -7,7 +7,7 @@ public class EntityHealth : MonoBehaviour
 {
     public int maxHealth, currentHealth;
 
-    public StatsBar statBar;
+    [HideInInspector]public StatsBar statBar;
     public ParticleSystem hitParticle;
 
     public bool isDead = false;

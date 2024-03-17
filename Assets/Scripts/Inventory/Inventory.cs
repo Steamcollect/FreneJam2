@@ -6,7 +6,7 @@ using TMPro;
 
 public class Inventory : MonoBehaviour
 {
-    // Inventory references
+    [Header("Inventory references")]
     public Image helmetImage, plateImage, feetImage, weaponImage;
     ItemData helmetData, plateData, feetData, weaponData;
 
@@ -17,12 +17,18 @@ public class Inventory : MonoBehaviour
     public AudioClip[] openCloseInventorySound;
     [HideInInspector] public CharacterController playerController;
 
-    // Add item panel
+    [Header("Add item panel references")]
     ItemData item;
     public GameObject addItemPanelGO;
     public Image itemVisual;
     public TMP_Text itemNameTxt, itemDescriptionTxt;
     public TMP_Text takeItemButtonTxt;
+
+    public TMP_Text convertToPointTxt;
+
+    [Header("Current item panel references")]
+    public GameObject currentItemPanelGO;
+    public TMP_Text currentItemTypeTxt, currentItemNameTxt, currentItemDescriptionTxt;
 
     [HideInInspector]public LoopManager loopManager;
 
@@ -41,13 +47,31 @@ public class Inventory : MonoBehaviour
     {
         this.item = item;
 
+        convertToPointTxt.text = "Convert " + (item.attackPointGiven + item.healthPointGiven + item.defensePointGiven) + " pts";
+
         if (!isInventoryOpon) InventoryButton();
 
-        if (item.equipmentType == EquipmentType.Comsumable) takeItemButtonTxt.text = "Comsume";
-        else if (item.equipmentType == EquipmentType.Helmet && helmetData != null) takeItemButtonTxt.text = "Replace '" + helmetData.itemName + "'";
-        else if (item.equipmentType == EquipmentType.Plate && plateData != null) takeItemButtonTxt.text = "Replace '" + plateData.itemName + "'";
-        else if (item.equipmentType == EquipmentType.Feet && feetData != null) takeItemButtonTxt.text = "Replace '" + feetData.itemName + "'";
-        else if (item.equipmentType == EquipmentType.Weapon && weaponData != null) takeItemButtonTxt.text = "Replace '" + weaponData.itemName + "'";
+        if (item.equipmentType == EquipmentType.Comsumable) takeItemButtonTxt.text = "Add to inventory";
+        else if (item.equipmentType == EquipmentType.Helmet && helmetData != null)
+        {
+            takeItemButtonTxt.text = "Replace '" + helmetData.itemName + "'";
+            SetCurrentItemPanel(helmetData);
+        }
+        else if (item.equipmentType == EquipmentType.Plate && plateData != null)
+        {
+            takeItemButtonTxt.text = "Replace '" + plateData.itemName + "'";
+            SetCurrentItemPanel(plateData);
+        }
+        else if (item.equipmentType == EquipmentType.Feet && feetData != null)
+        {
+            takeItemButtonTxt.text = "Replace '" + feetData.itemName + "'";
+            SetCurrentItemPanel(feetData);
+        }
+        else if (item.equipmentType == EquipmentType.Weapon && weaponData != null)
+        {
+            takeItemButtonTxt.text = "Replace '" + weaponData.itemName + "'";
+            SetCurrentItemPanel(weaponData);
+        }
         else takeItemButtonTxt.text = "Equip";
 
         addItemPanelGO.SetActive(true);
@@ -57,10 +81,18 @@ public class Inventory : MonoBehaviour
         itemNameTxt.text = item.itemName;
         itemDescriptionTxt.text = item.itemDescription;
     }
+    void SetCurrentItemPanel(ItemData item)
+    {
+        currentItemPanelGO.SetActive(true);
+
+        currentItemTypeTxt.text = "Current " + item.equipmentType.ToString().ToLower();
+        currentItemNameTxt.text = item.itemName;
+        currentItemDescriptionTxt.text = item.itemDescription;
+    }
 
     public void ConvertItemButton()
     {
-        ScoreManager.instance.AddScore(5);
+        ScoreManager.instance.AddScore(item.attackPointGiven + item.healthPointGiven + item.defensePointGiven);
         addItemPanelGO.SetActive(false);
         StartCoroutine(loopManager.CreateNewEnemy());
     }
@@ -69,11 +101,20 @@ public class Inventory : MonoBehaviour
         switch (item.equipmentType)
         {
             case EquipmentType.Comsumable:
-                playerController.health.TakeHealth(item.healthPointGiven);
-                playerController.attackPointBonnus += item.attackPointGiven;
-                playerController.defensesPointBonnus += item.defensePointGiven;
-
-                playerController.SetStatBar();
+                switch (item.consumableType)
+                {
+                    case ConsumableType.HealthPotion:
+                        playerController.healPotionCount++;
+                        break;
+                    
+                    case ConsumableType.DefensePotion:
+                        playerController.defensePotionCount++;
+                        break;
+                    
+                    case ConsumableType.AttackPotion:
+                        playerController.attackPotionCount++;
+                        break;
+                }
                 addItemPanelGO.SetActive(false);
                 StartCoroutine(loopManager.CreateNewEnemy());
                 return;
@@ -133,6 +174,7 @@ public class Inventory : MonoBehaviour
 
         playerController.SetStatBar();
         addItemPanelGO.SetActive(false);
+        currentItemPanelGO.SetActive(false);
 
         StartCoroutine(loopManager.CreateNewEnemy());
     }

@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: DefensePotion
   m_EditorClassIdentifier: 
   itemName: Defense potion
-  itemDescription: Give you 10 temporary defense point
+  itemDescription: Give you 5 temporary defense point
   visual: {fileID: 1859725314, guid: 8ac59d98617e4b4428f2a818eb3817a4, type: 3}
-  healthPointGiven: 0
+  healthPointGiven: 5
   attackPointGiven: 0
-  defensePointGiven: 10
+  defensePointGiven: 0
   equipmentType: 0
+  consumableType: 1

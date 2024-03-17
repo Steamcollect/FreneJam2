@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using System.Linq;
 
 public class LoopManager : MonoBehaviour
 {
@@ -87,13 +88,27 @@ public class LoopManager : MonoBehaviour
 
             enemysKilled++;
             scoreManager.AddScore(5);
-         
-            if(Random.Range(0,100) <= itemDropPercentage)
+
+            // Set item drop
+            if (Random.Range(0, 100) <= itemDropPercentage)
             {
-                int tmp = Random.Range(0, items.Count);
-                inventory.SetAddItemPanel(items[tmp]);
+                List<ItemData> comsumablesItems = new List<ItemData>(items.Where(elem => elem.equipmentType == EquipmentType.Comsumable));
+                List<ItemData> equipmentsItems = new List<ItemData>(items.Where(elem => elem.equipmentType != EquipmentType.Comsumable));
+
+                if (Random.Range(0, 100) < 40)
+                {
+                    inventory.SetAddItemPanel(equipmentsItems.GetRandom());
+                    //print("equipment slected");
+                }
+                else
+                {
+                    inventory.SetAddItemPanel(comsumablesItems.GetRandom());
+                    //print("Comsumable selected");
+                }
+
                 //items.RemoveAt(tmp);
             }
+            else StartCoroutine(CreateNewEnemy());
         }
         else if (player.health.isDead)
         {
@@ -128,31 +143,14 @@ public class LoopManager : MonoBehaviour
             }
             else
             {
-                switch (enemyAI.SelectAction())
-                {
-                    case 1:
-                        enemy.Attack();
-                        break;
-
-                    case 2:
-                        enemy.Defend();
-                        break;
-
-                    case 3:
-                        enemy.Focus();
-                        break;
-
-                    case 4:
-                        enemy.Heal();
-                        break;
-                }
-
+                enemyAI.SelectAction();
             }
         }
     }
      
     public IEnumerator CreateNewEnemy()
     {
+        if (enemy != null) Destroy(enemy.gameObject);
         if (enemyToSpawn.Count <= 0) enemyToSpawn = new List<GameObject>(enemysPrefabs);
 
         // Get random enemy
@@ -160,6 +158,41 @@ public class LoopManager : MonoBehaviour
         enemy = Instantiate(enemyToSpawn[currentEnemyId], new Vector2(10, 0), Quaternion.identity).GetComponent<CharacterController>();
         enemyToSpawn.RemoveAt(currentEnemyId);
         enemy.transform.DOMove(enemyPos, 1.5f);
+
+        // Set equipmentItem
+        List<ItemData> equipmentsItems = new List<ItemData>(items.Where(elem => elem.equipmentType != EquipmentType.Comsumable));
+        int equipmentProbability = scoreManager.score;
+        bool haveItem = false;
+        do
+        {
+            int tmp = Random.Range(0, 100);
+            if (tmp < equipmentProbability)
+            {
+                equipmentProbability -= tmp;
+                haveItem = true;
+                ItemData currentItem = equipmentsItems.GetRandom();
+                enemy.equipmentAttackPoint += currentItem.attackPointGiven;
+                enemy.equipmentDefensePoint += currentItem.defensePointGiven;
+                enemy.equipmentHealthPoint += currentItem.healthPointGiven;
+            }
+            else haveItem = false;
+        } while (haveItem);
+
+        // Set consumable item
+        int itemProbability;
+        do
+        {
+            itemProbability = Random.Range(0, 100);
+            if(itemProbability < 30)
+            {
+                int tmp = Random.Range(1, 4);
+                if (tmp == 1) enemy.healPotionCount++;
+                else if (tmp == 2) enemy.defensePotionCount++;
+                else enemy.attackPotionCount++;
+            }
+        }
+        while (itemProbability < 30);
+        
         // Set enemy stats
         enemy.loopManager = this;
         enemy.statBar = enemyStatBar;

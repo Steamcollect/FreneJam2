@@ -14,34 +14,49 @@ public class EnemyAI
      * 4 = heal
     */
 
-    public int SelectAction()
+    public void SelectAction()
     {
         if (playerController.health.currentHealth <= 2)
         {
             //Debug.Log("Attack");
             lastAction = 1;
-            return lastAction;
+            controller.Attack();
         }
-        else if (controller.health.currentHealth <= playerController.damage && controller.health.currentHealth < controller.health.maxHealth)
+        else if (controller.health.currentHealth <= playerController.damage && controller.health.currentHealth < controller.health.maxHealth && controller.healPotionCount > 0)
         {
             //Debug.Log("Heal");
             lastAction = 4;
-            return lastAction;
+            controller.HealPotion();
         }
         else if(lastAction == 3)
         {
             //Debug.Log("attack");
             lastAction = 1;
-            return lastAction;
+            controller.Defend(0);
         }
         else
         {
-            int[] tmp = { 1, 2, 3, 4 };
-            if (controller.health.currentHealth == controller.health.maxHealth) tmp = new int[] { 1, 2, 3};
-            lastAction = Random.Range(1, tmp.Length);
-            if (lastAction == 4) lastAction = Random.Range(1, tmp.Length - 1);
-            //Debug.Log("Random : "+ lastAction);
-            return lastAction;
+            int[] tmpChoices = { 1, 2, 3, 4 };
+            lastAction = Random.Range(1, tmpChoices.Length);
+
+            if (lastAction == 1) controller.Attack();
+            else if (lastAction == 2) controller.Defend(0);
+            else if (lastAction == 3) controller.Focus(0);
+            else if (lastAction == 4)
+            {
+                if (controller.attackPotionCount == 0 && controller.defensePotionCount == 0 && controller.healPotionCount == 0) SelectAction();
+
+                List<int> potionUsable = new List<int>();
+
+                if (controller.healPotionCount > 0 && controller.health.currentHealth < controller.health.maxHealth) potionUsable.Add(1);
+                if (controller.defensePotionCount > 0) potionUsable.Add(2);
+                if (controller.attackPotionCount > 0) potionUsable.Add(3);
+
+                int tmp = potionUsable.GetRandom();
+                if (tmp == 1) controller.HealPotion();
+                else if (tmp == 2) controller.DefensePotion();
+                else if (tmp == 3) controller.AttackPotion();
+            }
         }
     }
 }
