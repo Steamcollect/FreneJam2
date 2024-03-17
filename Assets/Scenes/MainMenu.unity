@@ -1435,19 +1435,8 @@ MonoBehaviour:
   initialScale: {x: 1, y: 1}
   finalScale: {x: 1.2, y: 1.2}
   moveTime: 0.3
-  selectSounds:
-  - {fileID: 8300000, guid: 94811de5d1ecc6e4d94925c81f887bdc, type: 3}
-  - {fileID: 8300000, guid: 7d3ba3ade519e9844aac2088754e2a84, type: 3}
-  - {fileID: 8300000, guid: 46cc5ebc5096e444da34ea198dd56999, type: 3}
-  - {fileID: 8300000, guid: 40f53abf2059f234c88d72bdc7669abb, type: 3}
-  - {fileID: 8300000, guid: 65b2066636b9318489d3e35b6fe59767, type: 3}
-  - {fileID: 8300000, guid: 2a2173aeb8fcda94ba990e84be005191, type: 3}
-  - {fileID: 8300000, guid: 30e935f611d1dfb42b7406948a0434aa, type: 3}
-  - {fileID: 8300000, guid: fbee4632ebe58ab41ba3187e8fc6864a, type: 3}
-  interactSounds:
-  - {fileID: 8300000, guid: 2c0862aa99e512549bd47165a62e48eb, type: 3}
-  - {fileID: 8300000, guid: 6b9a1b68b23528047b1eeef56ca48d04, type: 3}
-  - {fileID: 8300000, guid: b06ab06b138e6db4eb024b78a1ea0311, type: 3}
+  selectSounds: []
+  interactSounds: []
 --- !u!1 &404735499
 GameObject:
   m_ObjectHideFlags: 0
@@ -1672,19 +1661,8 @@ MonoBehaviour:
   initialScale: {x: 1, y: 1}
   finalScale: {x: 1.2, y: 1.2}
   moveTime: 0.3
-  selectSounds:
-  - {fileID: 8300000, guid: 94811de5d1ecc6e4d94925c81f887bdc, type: 3}
-  - {fileID: 8300000, guid: 7d3ba3ade519e9844aac2088754e2a84, type: 3}
-  - {fileID: 8300000, guid: 46cc5ebc5096e444da34ea198dd56999, type: 3}
-  - {fileID: 8300000, guid: 40f53abf2059f234c88d72bdc7669abb, type: 3}
-  - {fileID: 8300000, guid: 65b2066636b9318489d3e35b6fe59767, type: 3}
-  - {fileID: 8300000, guid: 2a2173aeb8fcda94ba990e84be005191, type: 3}
-  - {fileID: 8300000, guid: 30e935f611d1dfb42b7406948a0434aa, type: 3}
-  - {fileID: 8300000, guid: fbee4632ebe58ab41ba3187e8fc6864a, type: 3}
-  interactSounds:
-  - {fileID: 8300000, guid: 2c0862aa99e512549bd47165a62e48eb, type: 3}
-  - {fileID: 8300000, guid: 6b9a1b68b23528047b1eeef56ca48d04, type: 3}
-  - {fileID: 8300000, guid: b06ab06b138e6db4eb024b78a1ea0311, type: 3}
+  selectSounds: []
+  interactSounds: []
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -3148,19 +3126,8 @@ MonoBehaviour:
   initialScale: {x: 1, y: 1}
   finalScale: {x: 1.05, y: 1.05}
   moveTime: 0.3
-  selectSounds:
-  - {fileID: 8300000, guid: 94811de5d1ecc6e4d94925c81f887bdc, type: 3}
-  - {fileID: 8300000, guid: 7d3ba3ade519e9844aac2088754e2a84, type: 3}
-  - {fileID: 8300000, guid: 46cc5ebc5096e444da34ea198dd56999, type: 3}
-  - {fileID: 8300000, guid: 40f53abf2059f234c88d72bdc7669abb, type: 3}
-  - {fileID: 8300000, guid: 65b2066636b9318489d3e35b6fe59767, type: 3}
-  - {fileID: 8300000, guid: 2a2173aeb8fcda94ba990e84be005191, type: 3}
-  - {fileID: 8300000, guid: 30e935f611d1dfb42b7406948a0434aa, type: 3}
-  - {fileID: 8300000, guid: fbee4632ebe58ab41ba3187e8fc6864a, type: 3}
-  interactSounds:
-  - {fileID: 8300000, guid: 2c0862aa99e512549bd47165a62e48eb, type: 3}
-  - {fileID: 8300000, guid: 6b9a1b68b23528047b1eeef56ca48d04, type: 3}
-  - {fileID: 8300000, guid: b06ab06b138e6db4eb024b78a1ea0311, type: 3}
+  selectSounds: []
+  interactSounds: []
 --- !u!1 &1624341440
 GameObject:
   m_ObjectHideFlags: 0
@@ -3207,8 +3174,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playlist: []
-  soundMixerGroup: {fileID: 4494707965491837569, guid: 22b433cc3330edb43b3568da3916962a, type: 2}
   audioMixer: {fileID: 24100000, guid: 22b433cc3330edb43b3568da3916962a, type: 2}
+  soundMixerGroup: {fileID: 4494707965491837569, guid: 22b433cc3330edb43b3568da3916962a, type: 2}
 --- !u!82 &1624341443
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3831,19 +3798,8 @@ MonoBehaviour:
   initialScale: {x: 1, y: 1}
   finalScale: {x: 1.2, y: 1.2}
   moveTime: 0.3
-  selectSounds:
-  - {fileID: 8300000, guid: 94811de5d1ecc6e4d94925c81f887bdc, type: 3}
-  - {fileID: 8300000, guid: 7d3ba3ade519e9844aac2088754e2a84, type: 3}
-  - {fileID: 8300000, guid: 46cc5ebc5096e444da34ea198dd56999, type: 3}
-  - {fileID: 8300000, guid: 40f53abf2059f234c88d72bdc7669abb, type: 3}
-  - {fileID: 8300000, guid: 65b2066636b9318489d3e35b6fe59767, type: 3}
-  - {fileID: 8300000, guid: 2a2173aeb8fcda94ba990e84be005191, type: 3}
-  - {fileID: 8300000, guid: 30e935f611d1dfb42b7406948a0434aa, type: 3}
-  - {fileID: 8300000, guid: fbee4632ebe58ab41ba3187e8fc6864a, type: 3}
-  interactSounds:
-  - {fileID: 8300000, guid: 2c0862aa99e512549bd47165a62e48eb, type: 3}
-  - {fileID: 8300000, guid: 6b9a1b68b23528047b1eeef56ca48d04, type: 3}
-  - {fileID: 8300000, guid: b06ab06b138e6db4eb024b78a1ea0311, type: 3}
+  selectSounds: []
+  interactSounds: []
 --- !u!1 &1894564978
 GameObject:
   m_ObjectHideFlags: 0
